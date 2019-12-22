@@ -1,0 +1,36 @@
+<div class="container border border-warning rounded p-3">
+  <div class="row">
+    <div class="col">
+      <div *ngIf="user; else loading">
+        <h4 class="my-2 text-center">
+          {{ user.firstName + " " + user.lastName }}
+        </h4>
+        <hr />
+        <p>{{ user.country + ", " + user.city }}</p>
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <button
+              type="button"
+              class="btn btn-info btn-block btn-sm"
+              (click)="editUser()"
+            >
+              Edit
+            </button>
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <button
+              type="button"
+              class="btn btn-danger btn-block btn-sm"
+              (click)="deleteUser()"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <div>Choose user</div>
+</ng-template>

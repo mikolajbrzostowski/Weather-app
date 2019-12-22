@@ -1,0 +1,32 @@
+<div class="container">
+  <a
+    style="cursor: pointer;"
+    [routerLink]="['/users', user.id]"
+    routerLinkActive="active"
+    class="list-group-item list-group-item-action clearfix"
+  >
+    <div class="row">
+      <div class="col-sm-4 float-left">
+        <h4 class="list-group-item-heading d-inline">
+          {{ user.firstName + " " + user.lastName }}
+        </h4>
+        <span> {{ user.organisation }}</span>
+        <p class="list-group-item-text">
+          <span class="d-block">{{ user.country }}</span>
+          <span class="d-block">{{ user.city }}</span>
+        </p>
+      </div>
+      <div class="col-sm-8">
+        <div class="row float-right">
+          <div class="col">
+            <button type="button" class="btn btn-primary">Edit</button>
+          </div>
+
+          <div class="col">
+            <button type="button" class="btn btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>

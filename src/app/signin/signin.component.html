@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-6 offset-sm-2 offset-md-3 mx-auto">
+      <h2 class="my-2">
+        Please Sign In <small>To my small Kotrak app.</small>
+      </h2>
+      <hr />
+      <div class="row my-2">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input
+                        type="text"
+                        id="email"
+                        formControlName="email"
+                        class="form-control"
+                        placeholder="Email"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input
+                        type="password"
+                        id="password"
+                        formControlName="password"
+                        class="form-control"
+                        placeholder="Password"
+                      />
+                    </div>
+                    <div class="alert alert-danger" role="alert" *ngIf="error">
+                      Wrong email or password.
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div
+                    class="col-xs-12 col-md-6 col-lg-4 offset-md-3 offset-lg-4"
+                  >
+                    <input
+                      type="submit"
+                      class="btn btn-success btn-block btn-lg"
+                      [disabled]="!signinForm.valid"
+                      value="Sign in"
+                    />
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

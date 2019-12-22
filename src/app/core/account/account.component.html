@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row my-2">
+    <div class="col">
+      <h5>{{ user.email }}</h5>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col">
+      <button type="button" class="btn btn-success mx-2"
+        (click)="editProfile()">Edit profile</button>
+      <button type="button" class="btn btn-warning mx-2" (click)="onChangePasswordButtonClick()">Zmień hasło</button>
+      <button type="button" class="btn btn-danger mx-2" (click)="onDeleteAccountButtonClick()">Usuń konto</button>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,2 @@
-# Weather-app
+Frontend app for recrutment purposes
+

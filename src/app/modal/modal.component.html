@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ title }}</h4>
+  <button
+    type="button"
+    class="close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="userForm" (ngSubmit)="onConfirm(f)" novalidate>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input formControlName="email" type="email" class="form-control" id="email" placeholder="Email" />
+    </div>
+    <div class="form-group">
+      <label for="firstName">Name</label>
+      <input formControlName="firstName" type="text" class="form-control" id="firstName" placeholder="Name" />
+    </div>
+    <div class="form-group">
+      <label for="lastName">Lastname</label>
+      <input
+      formControlName="lastName"
+        type="text"
+        class="form-control"
+        id="lastName"
+        placeholder="Lastname"
+      />
+    </div>
+    <div class="form-group">
+      <label for="country">Country</label>
+      <input
+      formControlName="country"
+        type="text"
+        class="form-control"
+        id="country"
+        placeholder="Country"
+      />
+    </div>
+    <div class="form-group">
+      <label for="city">City</label>
+      <input  formControlName="city" type="text" class="form-control" id="city" placeholder="City" />
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-info" (click)="onConfirm(f)">
+    {{ confirmButtonText }}
+  </button>
+  <button type="button" class="btn btn-danger" (click)="onCancel()">
+    {{ cancelButtonText }}
+  </button>
+</div>
