@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-signin',
@@ -28,6 +28,6 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.signin(this.signinForm.value.email, this.signinForm.value.password);
+    this.authService.login(this.signinForm.value.email, this.signinForm.value.password);
   }
 }

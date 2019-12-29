@@ -1,6 +1,6 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { UserService } from './user.service';
+import { UserService } from '../services/user.service';
 
 @Directive({ selector: '[appHasRole]' })
 export class HasRoleDirective extends NgIf {

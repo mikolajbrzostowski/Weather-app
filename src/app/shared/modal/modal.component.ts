@@ -1,9 +1,9 @@
-import { User } from './../models/user.model';
-import { UserService } from './../services/user.service';
+import { User } from '../../models/user.model';
 import { Component, OnInit, TemplateRef, ViewChild, Renderer2 } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
-import { FormControl, FormGroup } from '@angular/forms';
+import { NgForm, FormControl, FormGroup } from '@angular/forms';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-modal',

@@ -12,12 +12,19 @@
   >
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01" [ngClass]="{ 'show': navbarOpen }">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 mx-2">
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/users">Users</a>
-      </li>
-    </ul>
+  <div
+    class="collapse navbar-collapse"
+    id="navbarTogglerDemo01"
+    [ngClass]="{ show: navbarOpen }"
+  >
+    <div *ngIf="user && user.role === 'admin'">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0 mx-2">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/users">Users</a>
+        </li>
+      </ul>
+    </div>
+
     <ul class="navbar-nav ml-auto mt-2 mt-lg-0 mx-2" *ngIf="!user">
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/signup">Register</a>
@@ -31,7 +38,9 @@
         <a class="nav-link" routerLink="/account">Hello {{ user.email }}</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" style="cursor: pointer;" (click)="onLogout()">Logout</a>
+        <a class="nav-link" style="cursor: pointer;" (click)="onLogout()"
+          >Logout</a
+        >
       </li>
     </ul>
   </div>

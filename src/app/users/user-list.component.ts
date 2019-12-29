@@ -1,11 +1,12 @@
-import { ModalComponent } from './../modal/modal.component';
+import { ModalComponent } from '../shared/modal/modal.component';
 import { ToastrService } from 'ngx-toastr';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { User } from './../user.model';
+import { User } from '../models/user.model';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
+
 
 @Component({
   selector: 'app-user-list',
@@ -29,7 +30,8 @@ export class UserListComponent implements OnInit {
   }
 
   createNewUser(user: User) {
-    this.userService.createUser(user);
+    user.password = this.userService.getASecureRandomPassword();
+    this.userService.emailSignup(user);
   }
 
   onNewUserButtonClick() {
@@ -56,7 +58,6 @@ export class UserListComponent implements OnInit {
 
     this.modalRef = this.modalService.show(modal, { initialState });
     this.modalRef.content.onClose.subscribe((result: User | null) => {
-      console.log('result: ', result);
       if (result) {
         this.modalRef.content.data.callback(result);
       }
@@ -66,4 +67,12 @@ export class UserListComponent implements OnInit {
   onUserClick(user: User) {
     this.activeUser = user;
   }
+
+  generatePDF() {
+    // TODO
+
+  }
+
+
+
 }

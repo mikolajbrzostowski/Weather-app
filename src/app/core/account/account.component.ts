@@ -1,11 +1,12 @@
-import { User } from './../../user.model';
+import { ConfirmModalComponent } from '../../shared/confirm-modal/confirm-modal.component';
+import { User } from '../../models/user.model';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from 'src/app/user.service';
-import { ModalComponent } from 'src/app/modal/modal.component';
+import { UserService } from 'src/app/services/user.service';
+import { ModalComponent } from 'src/app/shared/modal/modal.component';
 
 @Component({
   selector: 'app-account',
@@ -20,15 +21,15 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   constructor(
     private modalService: BsModalService,
-    private authService: UserService,
+    private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService
   ) {}
 
   ngOnInit() {
-    this.user = this.authService.getSignedInUser();
-    this.subscription = this.authService.userChanegd.subscribe(user => {
+    this.user = this.userService.user;
+    this.subscription = this.userService.userChanegd.subscribe(user => {
       this.user = user;
     });
   }
@@ -37,26 +38,36 @@ export class AccountComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  editProfile() {
-    // TODO
+  updateUser(updatedUser: User) {
+    this.userService.updateUser(updatedUser).then(value =>
+      this.userService.getUserById(this.user.uid).subscribe(response => {
+        this.userService.setUser(response);
+      })
+    );
   }
 
+  onEditButtonClick() {
+    this.showModal('Edit user', [], 'Confirm', 'Cancel', ModalComponent, {
+      callback: this.updateUser.bind(this),
+      user: this.user
+    });
+  }
 
   onDeleteAccountButtonClick() {
     // TODO WYSWIETL MODAL CZY NA PEWNO
     this.showModal(
-      'Potwierdź usunięcie konta',
-      ['Czy chcesz usunąć konto?'],
-      'Potwierdź',
-      'Anuluj',
-      ModalComponent,
+      'Delete account',
+      ['Are you sure?'],
+      'Confirm',
+      'Cancel',
+      ConfirmModalComponent,
       { callback: this.deleteAccount.bind(this, [this.user.email]) }
     );
   }
 
   deleteAccount(id: number): void {
-    this.authService.deleteUser(this.user);
-    this.authService.logout();
+    this.userService.deleteCurrentUser(this.user);
+    this.userService.logout();
     this.modalRef.hide();
     this.router.navigate(['../'], { relativeTo: this.route });
   }
@@ -78,46 +89,11 @@ export class AccountComponent implements OnInit, OnDestroy {
     };
 
     this.modalRef = this.modalService.show(modal, { initialState });
-    this.modalRef.content.onClose.subscribe(
-      (result: boolean | { isConfirmed: boolean; password: string }) => {
-        console.log('result: ', result);
-        if (
-          typeof result === 'object' &&
-          result.hasOwnProperty('isConfirmed') &&
-          result.hasOwnProperty('password') &&
-          result.isConfirmed
-        ) {
-          console.log('odpalam passworda');
-          result
-            ? this.modalRef.content.data.callback(result.password)
-            : this.modalRef.hide();
-        } else if (typeof result === 'boolean') {
-          console.log('odpalam regulara');
-          result ? this.modalRef.content.data.callback() : this.modalRef.hide();
-        }
+    this.modalRef.content.onClose.subscribe(result => {
+      // console.log('result: ', result);
+      if (result) {
+        this.modalRef.content.data.callback(result);
       }
-    );
-  }
-
-  showChangePasswordModal(
-    title: string,
-    list: any[],
-    confirmButtonText: string,
-    cancelButtonText: string,
-    modal,
-    data: {}
-  ): void {
-    const initialState = {
-      title,
-      list,
-      confirmButtonText,
-      cancelButtonText,
-      data
-    };
-
-    this.modalRef = this.modalService.show(modal, { initialState });
-    this.modalRef.content.onClose.subscribe((result: boolean) => {
-      result ? this.modalRef.content.data.callback() : this.modalRef.hide();
     });
   }
 }
