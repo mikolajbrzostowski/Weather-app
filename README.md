@@ -1,2 +1,2 @@
-Frontend app for recrutment purposes
+Frontend app for recruitment purposes
 
